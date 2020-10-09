@@ -1,0 +1,213 @@
+
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage{amsxtra}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\set}[1]{\left\{ #1\right\}}
+\newcommand{\bin}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newenvironment{proof}{\noindent{\bf Proof.}}{\hfill $\square$\medskip}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[utf8]{inputenc}
+
+\title{The Exponential Function}
+\author{Andy Pang}
+\date{}
+
+
+\maketitle
+
+
+
+\begin{document}
+
+
+In this essay, we will describe and discuss various aspects of the exponential function. Euler's number will be shown through the convergence of the sequence $(1 + \frac{1}{n})^n$. The exponential function will be constructed following this, using both the characterization of the function through the limit $\lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n$ as well as the sum of the infinite series $\sum_{n = 0}^\infty \frac {x^n}{n!}$. The continuity of the real-valued function will be discussed as well, along with the fact that the exponential function is a homomorphism. Following this, the derivative of the exponential will be explored, along with the proof that its derivative exists and is equal to itself.
+
+To start, we prove that Euler's number -- the real number $e = 1 + \frac{1}{1!} + \frac{2}{2!} + ...$ exists. 
+
+Consider a sequence of real numbers where:
+
+$x_0 = 1$, $x_n = (1+\frac{1}{n})^n$ and $x_{n+1} = x_n + \frac{1}{(n+1)!}$
+
+
+Using the binomial theorem (for $a,b \in \Q$ and $n \in \N$):\\
+
+$(a+b)^n = \sum_{k=0}^n \binom{n}{k} a^{n-k} b^k$\\
+
+Here: $a = 1$ and $b = \frac{1}{n}$, yielding: $(1+\frac{1}{n})^n = \sum_{k=0}^n \binom{n}{k} 1^{n-k} (\frac{1}{n})^k$\\
+
+$= \sum_{k=0}^n \frac{n!}{k!(n-k)!} \frac{1^{n-k}}{n^k}$\\
+
+$= \sum_{k=0}^n \frac{n!}{k!(n-k)!} \frac{1}{n^k}$\\
+
+$= \frac{n!}{1(n-0)!} \frac{1}{1} + \frac{n!}{1!(n-1)!} \frac{1}{n} + \frac{n!}{2!(n-2)!} \frac{1}{n^2} + \frac{n!}{3!(n-3)!} \frac{1}{n^3} + ... + \frac{n!}{n!(n-n)!} \frac{1}{n^n}$\\
+
+$=  1 + 1 + \frac{1}{2!}\frac{(n-1)}{n} + \frac{1}{3!}\frac{(n-1)(n-2)}{n^2} + ... + (\frac{1}{n})^n$\\
+
+
+$=  1 + 1 + \frac{1}{2!}(1-\frac{1}{n}) + \frac{1}{3!}(1-\frac{1}{n})(1-\frac{2}{n}) + ... + ((1-\frac{1}{n})(1-\frac{2}{n})...(1-\frac{n-1}{n})\frac{1}{n!})$\\
+
+$\leq 1 + 1 + \frac{1}{2!} + \frac{1}{3!} + ... + \frac{1}{n!} 
+\leq \sum_{k=0}^n \frac{1}{2^{k-1}} = 2 + 1 + \frac{1}{2} + \frac{1}{4} + ... + \frac{1}{2^{n-1}}$\\
+
+Thus $x_n = (1+\frac{1}{n})^n < 3$.\\
+
+\newpage
+
+Furthermore, we can show that the sequence ${x_n}$ is strictly increasing for all $n$ by replacing $n$ with $n+1$ and comparing the two sequences:\\
+
+$\bullet (1+\frac{1}{n})^n = \sum_{k=0}^n \binom{n}{k} 1^{n-k} (\frac{1}{n})^k$\\
+
+$=  1 + 1 + \frac{1}{2!}(1-\frac{1}{n}) + \frac{1}{3!}(1-\frac{1}{n})(1-\frac{2}{n}) + ... + ((1-\frac{1}{n})(1-\frac{2}{n})...(1-\frac{n-1}{n})\frac{1}{n!})$\\
+
+Whereas:\\
+
+$\bullet (1+\frac{1}{n+1})^{n+1} = \sum_{k=0}^{n+1} \binom{n+1}{k} 1^{n+1-k} (\frac{1}{n+1})^k$\\
+
+$=  1 + 1 + \frac{1}{2!}(1-\frac{1}{n+1}) + \frac{1}{3!}(1-\frac{1}{n+1})(1-\frac{2}{n+1}) + $
+
+$... + ((1-\frac{1}{n+1})(1-\frac{2}{n+1})...(1-\frac{n}{n+1})\frac{1}{(n+1)!})$\\
+
+The first sequence has one fewer term than the second sequence, with each of the corresponding terms for the first sequence taking values which are less than or equal to those of the $n+1$ sequence. Because\\
+
+$(1+\frac{1}{n+1})^{n+1} - (1+\frac{1}{n})^n \geq 0$\\
+
+it can be said the sequence $(1+\frac{1}{n})^n$ is monotonically increasing.\\
+
+From this, we can further conclude that $2 < x_n < 3$ because $x_1 = (1+ \frac{1}{1})^1 = 2$.\\
+
+We say that the sequence  $(1+ \frac{1}{n})^n$ is convergent, Cauchy (elements get closer to each other as sequence length increases), and that its limit is denoted $e$, the supremum (least upper bound) of the set ${x_n} \subset [2,3)$. Thus, we have proved that there exists a real number:
+
+$e = 1 + \frac{1}{1!} +  \frac{1}{2!} + ... = \lim_{n \rightarrow \infty} (1 + \frac{1}{n})^n$.\\
+
+
+Moving onto the exponential function, we aim to prove that the function $exp$ exists from $\R \rightarrow \R$. Consider the sequence of rational numbers: 
+
+$e_0^x = 1$ and $e_{n+1}^x = e_n^x + \frac{x^{n+1}}{(n+1)!}$\\
+
+It follows:\\
+
+$e_1^x = e_0^x + \frac{x^1}{1!} = 1 + \frac{x^1}{1!}$ and that 
+$e_2^x = e_1^x + \frac{x^2}{2!} = 1 + \frac{x^1}{1!} + \frac{x^2}{2!}$\\
+
+Then $e_{n+1}^x = 1 + \frac{x^1}{1!} + \frac{x^2}{2!} + ... + \frac{x^{n+1}}{(n+1)!} = \sum_{k=0}^{n+1} \frac{x^k}{k!}$, and thus:
+
+$e_n^x = e_{n+1}^x - \frac{x^{n+1}}{(n+1)!} = \sum_{k=0}^{n+1} \frac{x^k}{k!} - \frac{x^{n+1}}{(n+1)!} = \sum_{k=0}^{n} \frac{x^k}{k!}$
+
+
+
+We see that $e_n^x$ takes the form: $1 + \frac{x^1}{1!} + \frac{x^2}{2!} + ... + \frac{x^n}{n!}$, which is can be said to be $\sum_{k=0}^n \frac{x^k}{k!}$. \\
+
+We next show that $\set{e_n^x}_{n=0}^\infty$ is a Cauchy sequence as well. It is understood that a sequence $f$ is Cauchy if:\\
+$(\forall \ep \in \R)((\ep > 0) \rightarrow (\exists N \in \N)(\forall m,n > N)(|f(n) - f(m)| < \ep))$\\
+
+Applying this definition to ${e_n^x}$ gives:
+
+$|e_{n+p}^x - e_n^x| = |\sum_{k=0}^{n+p}\frac{x^k}{k!} - \sum_{k=0}^{n}\frac{x^k}{k!}|$
+
+$= |\sum_{k=n+1}^{n+p}\frac{x^k}{k!}| \leq \sum_{k=n+1}^{n+p}\frac{x^k}{k!} \leq \sum_{k=n+1}^\infty \frac{x^k}{k!} < \ep$
+
+$\sum_{k=n+1}^\infty \frac{x^k}{k!}$ is known to be a convergent series, as its sequence of partial sums tends to a limit (here it is zero). Thus $\set{e_n^x}_{n=0}^\infty$ is a Cauchy sequence.\\
+
+Furthermore, it is known that for all $k > N$ -- for any chosen $y$, it is true that $k! > y^k$. Therefore, for some $|\frac{x}{y}| < 1$, it holds that $|\sum_{k=n+1}^{n+p}\frac{x^k}{k!}| \leq \sum_{k=n+1}^{n+p}\frac{x^k}{y^k}$. This cements the fact that $\set{e_n^x}_{n=0}^\infty$ converges. It is then understood that $\lim_{n \rightarrow \infty} \sum_{k=0}^{n}\frac{x^k}{k!} = \sum_{k=0}^\infty \frac{x^k}{k!}$.
+Thus, the function 
+
+$exp: \R \rightarrow \R, x \mapsto exp(x):=\sum_{k=0}^\infty \frac{x^k}{k!}$ 
+
+is well defined because the series above is absolutely convergent for all $x \in \R$. \\
+
+Assuming $0 < x < n$ and that $x = \frac{p}{q} \in Q$, we will now prove that:
+
+$\lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n = \sum_{k=0}^\infty \frac{x^k}{k!}$
+
+We have already established that $(1 + \frac{1}{n})^n$ is a Cauchy sequence. Here, we extend this to $(1 + \frac{x}{n})^n$, employing the binomial theorem again:\\
+
+Here: $a = 1$ and $b = \frac{x}{n}$, yielding: $(1 + \frac{x}{n})^n = \sum_{k=0}^n \binom{n}{k} 1^{n-k} (\frac{x}{n})^k$
+
+$= \sum_{k=0}^n \frac{n!}{k!(n-k)!} \frac{x^{k}}{n^k}$\\
+
+$= \frac{n!}{n!}\frac{x^0}{n^0} + \frac{n!}{(n-1)!}\frac{x}{n} + \frac{n!}{2!(n-2)!}\frac{x^2}{n^2}$
+
+$= 1 + x + \frac{n(n-1)}{2!}(\frac{x}{n})^2 + \frac{n(n-1)(n-2)}{3!}(\frac{x}{n})^3 + ... +  \frac{n!}{n!(n-n)!}(\frac{x}{n})^k$\\
+
+We compare this to the sequence $e_n^x = 1 + \frac{x^1}{1!} + \frac{x^2}{2!} + ... + \frac{x^n}{n!} = \sum_{k=0}^n \frac{x^k}{k!}$ as defined earlier, proving that $e_n^x = \sum_{k=0}^n \frac{x^k}{k!} > (1 + \frac{x}{n})^n$.\\
+
+It should also be noted that use of the binomial theorem will also yield the result: $(1 + \frac{1}{n})^n \leq \sum_{k=0}^n \frac{1}{k!} \leq exp(1) = \lim_{n \rightarrow \infty} \sum_{k=0}^n \frac{1}{k!}$
+
+Next, assuming $0 < x < n$ and that $x = \frac{p}{q} \in Q$, $(1-\frac{x}{n})^{-n}$ is examined. Employing the negative binomial theorem:
+
+$\frac{1}{(1+x)^n} = \sum_{k=0}^\infty \binom{n+k-1}{k}(-1)^kx^k$\\
+
+yields: $(1-\frac{x}{n})^{-n} = 1 + x + \frac{n(n+1)}{2!}(\frac{x}{n})^2 + ...$\\
+
+Comparing to the above sequences, it is plain to see that
+
+$(1 + \frac{x}{n})^n < \sum_{k=0}^n \frac{x^k}{k!} \leq (1-\frac{x}{n})^{-n}$
+
+We next consider the limit of $(1 + \frac{x}{n})^n - (1-\frac{x}{n})^{-n}$:
+
+$\lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n - (1-\frac{x}{n})^{-n} = 0$
+
+This allows for use of the squeeze theorem/sandwich theorem:
+
+Because $(1 + \frac{x}{n})^n < \sum_{k=0}^n \frac{x^k}{k!} \leq (1-\frac{x}{n})^{-n}$,
+
+and $\lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n = 
+\lim_{n \rightarrow \infty} (1-\frac{x}{n})^{-n}$,
+
+then
+$\lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n = 
+\lim_{n \rightarrow \infty} \sum_{k=0}^n \frac{x^k}{k!} = 
+\lim_{n \rightarrow \infty}(1-\frac{x}{n})^{-n}, \forall x > 0$\\
+
+In the case where $x = 0$, we see that the relation still holds, with the trivial result of $e^0 = 1$. When $x < 0$, we look to the properties of the series $1 + x + \frac{x^2}{2!} + ...$. It is true that $(1 + \frac{x+y}{n})^n = (1 + \frac{x}{n})^n \cdot (1 + \frac{y}{n})^n$. In other words, $e^x$ is a homomorphism as well: \\
+
+$e^xe^y = \sum_{n=0}^\infty \frac{x^n}{n!} \cdot \sum_{n=0}^\infty \frac{y^n}{n!} =
+\sum_{n=0}^\infty \sum_{k=0}^n \frac{x^ky^n}{k!n!} =
+\sum_{n=0}^\infty \frac{(x+y)^n}{n!} = e^{x+y}$\\
+
+Then it follows that $(1 + \frac{-x}{n})^n$ is equal to $(1 + \frac{x}{n})^{-n}$, with similar results for the other portions of the relation.
+
+
+With this, we have proven $\lim_{n \rightarrow \infty} (1+\frac{1}{n})^n = exp(x) = e^x , x \in \R$ and showed an equivalence between two relations of the exponential function -- as both the limit stated above and the infinite series sum $\sum_{n=0}^\infty \frac{x^n}{n!}$.\\
+
+We next show the continuity of the exponential function. It has already been shown that $exp(x+y) = exp(x) \cdot exp(y)$, along with the fact that $exp(x) = \sum_{n=0}^\infty \frac{x^n}{n!}$ converges over the whole of $\R$, meaning the exponential function is continuous.\\
+
+Thus, we have proved that there exists a continuous function 
+
+$exp: \R \rightarrow \R$.\\
+
+We will next show that the exponential function is differentiable, and that its derivative is itself. From the earlier proofs, we have already shown that interval of convergence for the exponential function is over all of the real numbers.
+
+First the function's differentiability will be proven. Recall that a function $f$ is differentiable at $x$ if
+$\lim_{h \rightarrow 0} \frac{f(x+h)-f(x)}{h}$ exists.
+
+$D_x(exp(x)) = \lim_{h \rightarrow 0} \frac{exp(x+h)-exp(x)}{h}$\\
+
+Because we have shown $exp(x+y) = exp(x) \cdot exp(y)$:\\
+
+$= \lim_{h \rightarrow 0} \frac{exp(x) \cdot exp(h) - exp(x)}{h}$\\
+
+$= \lim_{h \rightarrow 0} \frac{exp(x) (exp(h)-1)}{h}$\\
+
+Because $exp(x)$ is constant here:\\
+
+$\lim_{h \rightarrow 0} \frac{exp(x) (exp(h)-1)}{h} = exp(x)$\\
+
+Thus, we have proved that the exponential function's derivative exists and is itself.
+
+This follows from the fact that the exponential function is strictly convex -- a property stemming from its absolute convergence in its series representation as well as its continuity.
+
+Furthermore, because the function is differentiable and well defined, its continuity is implied, strengthening our previous conclusion.\\
+
+In conclusion, we have proved that there exists a real number $e$, which takes the form $1 + \frac{1}{1!} + \frac{2}{2!} + ... = \lim_{n \rightarrow \infty} (1 + \frac{1}{n})^n$, during the process which we showed that this sequence is Cauchy. Next, we showed the existence of the continuous exponential function $exp: \R \rightarrow \R$, using the form $\lim_{n \rightarrow \infty} \frac{x^n}{n!}$. First, it was proved that the power series representation of the exponential function is a convergent series. The equivalence between the sum of the infinite power series and the limit as $n \rightarrow \infty$ for $(1 + \frac{x}{n})^n$ is established as well. The continuity of the exponential function was explored next, finalizing the proof for $exp: \R \rightarrow \R$ and during which, we showed that the function is a homomorphism as well. Furthermore, we have also shown that the derivative for this function exists and is equal to itself.
+
+\end{document}
